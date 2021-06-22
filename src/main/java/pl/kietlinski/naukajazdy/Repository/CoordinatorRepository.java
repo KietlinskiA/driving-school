@@ -6,4 +6,5 @@ import pl.kietlinski.naukajazdy.Entity.Coordinator;
 
 @Repository
 public interface CoordinatorRepository extends JpaRepository<Coordinator, Long> {
+    Coordinator findCoordinatorByUsername(String username);
 }

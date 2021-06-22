@@ -1,12 +1,12 @@
 package pl.kietlinski.naukajazdy.Service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.kietlinski.naukajazdy.Entity.Coordinator;
 import pl.kietlinski.naukajazdy.Entity.DrivingDate;
 import pl.kietlinski.naukajazdy.Entity.Instructor;
 import pl.kietlinski.naukajazdy.Entity.Student;
-import pl.kietlinski.naukajazdy.Model.AccountType;
 import pl.kietlinski.naukajazdy.Repository.CoordinatorRepository;
 import pl.kietlinski.naukajazdy.Repository.DrivingDateRepository;
 import pl.kietlinski.naukajazdy.Repository.InstructorRepository;
@@ -23,24 +23,32 @@ public class StudentService {
     private CoordinatorRepository coordinatorRepository;
     private DrivingDateRepository drivingDateRepository;
 
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
-    public StudentService(StudentRepository studentRepository, InstructorRepository instructorRepository, CoordinatorRepository coordinatorRepository, DrivingDateRepository drivingDateRepository) {
+    public StudentService(StudentRepository studentRepository, InstructorRepository instructorRepository, CoordinatorRepository coordinatorRepository, DrivingDateRepository drivingDateRepository, PasswordEncoder passwordEncoder) {
         this.studentRepository = studentRepository;
         this.instructorRepository = instructorRepository;
         this.coordinatorRepository = coordinatorRepository;
         this.drivingDateRepository = drivingDateRepository;
+        this.passwordEncoder = passwordEncoder;
+        init();
+    }
+
+    public String getPass() {
+        return passwordEncoder.encode("pass");
     }
 
     public void init() {
-        Student student1 = new Student("Maciek", "Walczak",	0, "maciek1", "pass", AccountType.STUDENT);
-        Student student2 = new Student("Michał", "Kafin",	0, "michal1", "pass", AccountType.STUDENT);
-        Student student3 = new Student("Bartosz", "Sołtys",	0, "bartosz1", "pass", AccountType.STUDENT);
-        Instructor instructor1 = new Instructor("Marcel", "Misa", 0, "marcel1", "pass", AccountType.INSTRUCTOR);
-        Instructor instructor2 = new Instructor("Kamil", "Ojzyn", 0, "kamil1", "pass", AccountType.INSTRUCTOR);
-        Instructor instructor3 = new Instructor("Filip", "Korcinowicz", 0, "filip1", "pass", AccountType.INSTRUCTOR);
-        Coordinator coordinator1 = new Coordinator("Karol", "Kuracz", "karol1", "pass", AccountType.COORDYNATOR);
-        Coordinator coordinator2 = new Coordinator("Justyna", "Opalska", "justyna1", "pass", AccountType.COORDYNATOR);
-        Coordinator coordinator3 = new Coordinator("Krystyna", "Czubówna", "krystyna1", "pass", AccountType.COORDYNATOR);
+        Student student1 = new Student("Maciek", "Walczak",	0, "maciek1",getPass() );
+        Student student2 = new Student("Michał", "Kafin",	0, "michal1", getPass());
+        Student student3 = new Student("Bartosz", "Sołtys",	0, "bartosz1", getPass());
+        Instructor instructor1 = new Instructor("Marcel", "Misa", 0, "marcel1", getPass());
+        Instructor instructor2 = new Instructor("Kamil", "Ojzyn", 0, "kamil1", getPass());
+        Instructor instructor3 = new Instructor("Filip", "Korcinowicz", 0, "filip1", getPass());
+        Coordinator coordinator1 = new Coordinator("Karol", "Kuracz", "karol1", getPass());
+        Coordinator coordinator2 = new Coordinator("Justyna", "Opalska", "justyna1", getPass());
+        Coordinator coordinator3 = new Coordinator("Krystyna", "Czubówna", "krystyna1", getPass());
         DrivingDate drivingDate1 = new DrivingDate(LocalDate.now(), LocalTime.now(), false, false);
         DrivingDate drivingDate2 = new DrivingDate(LocalDate.now(), LocalTime.now(), true, false);
         DrivingDate drivingDate3 = new DrivingDate(LocalDate.now(), LocalTime.now(), true, true);

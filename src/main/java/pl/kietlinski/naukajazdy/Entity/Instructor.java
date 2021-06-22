@@ -2,16 +2,20 @@ package pl.kietlinski.naukajazdy.Entity;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.kietlinski.naukajazdy.Model.AccountType;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @Entity
 @Table(name = "instructors")
-public class Instructor {
+public class Instructor implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "instructor_id")
@@ -23,12 +27,9 @@ public class Instructor {
     @Column(name = "worked_hours")
     private int workedHours;
     @Column(nullable = false, length = 30)
-    private String login;
-    @Column(nullable = false, length = 30)
+    private String username;
+    @Column(nullable = false)
     private String password;
-    @Column(name = "account_type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private AccountType accountType;
 
     @OneToMany(mappedBy = "instructor")
     private Set<DrivingDate> drivingDateSet;
@@ -36,12 +37,36 @@ public class Instructor {
     @ManyToOne
     private Coordinator coordinator;
 
-    public Instructor(String name, String surname, int workedHours, String login, String password, AccountType accountType) {
+    public Instructor(String name, String surname, int workedHours, String username, String password) {
         this.name = name;
         this.surname = surname;
         this.workedHours = workedHours;
-        this.login = login;
+        this.username = username;
         this.password = password;
-        this.accountType = accountType;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singleton(new SimpleGrantedAuthority("ROLE_INSTRUCTOR"));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
