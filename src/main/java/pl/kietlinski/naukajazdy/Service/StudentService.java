@@ -38,7 +38,7 @@ public class StudentService {
         Instructor instructor1 = new Instructor("Marcel", "Misa", 0, "marcel1", "pass", AccountType.INSTRUCTOR);
         Instructor instructor2 = new Instructor("Kamil", "Ojzyn", 0, "kamil1", "pass", AccountType.INSTRUCTOR);
         Instructor instructor3 = new Instructor("Filip", "Korcinowicz", 0, "filip1", "pass", AccountType.INSTRUCTOR);
-        Coordinator coordinator1 = new Coordinator("Karol", "Kurcz", "karol1", "pass", AccountType.COORDYNATOR);
+        Coordinator coordinator1 = new Coordinator("Karol", "Kuracz", "karol1", "pass", AccountType.COORDYNATOR);
         Coordinator coordinator2 = new Coordinator("Justyna", "Opalska", "justyna1", "pass", AccountType.COORDYNATOR);
         Coordinator coordinator3 = new Coordinator("Krystyna", "Czubówna", "krystyna1", "pass", AccountType.COORDYNATOR);
         DrivingDate drivingDate1 = new DrivingDate(LocalDate.now(), LocalTime.now(), false, false);
